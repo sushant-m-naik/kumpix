@@ -1,0 +1,64 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "This mutation is used to seed data and requires user authentication for execution.") {
+  category_insertMany(data: [
+    {
+      id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      name: "Technology",
+      description: "Events related to software, hardware, and digital innovation."
+    },
+    {
+      id: "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+      name: "Arts & Culture",
+      description: "Events showcasing artistic expression and cultural heritage."
+    }
+  ])
+  user_insertMany(data: [
+    {
+      id: "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+      displayName: "Alice Smith",
+      email: "alice.smith@example.com",
+      createdAt: "2024-01-01T10:00:00Z",
+      bio: "Tech enthusiast and event organizer.",
+      location: "New York"
+    },
+    {
+      id: "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+      displayName: "Bob Johnson",
+      email: "bob.johnson@example.com",
+      createdAt: "2024-01-05T11:30:00Z",
+      bio: "Art lover and frequent event attendee.",
+      location: "London"
+    }
+  ])
+  event_insertMany(data: [
+    {
+      id: "e5f6a7b8-c9d0-1234-5678-90abcdef0123",
+      name: "Global Tech Summit",
+      date: "2024-07-15",
+      time: "09:00",
+      location: "New York Convention Center",
+      isPublic: true,
+      createdAt: "2024-02-10T14:00:00Z",
+      categoryId: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      creatorId: "c3d4e5f6-a7b8-9012-3456-7890abcdef01",
+      description: "Annual summit for technology leaders and innovators.",
+      imageUrl: "https://example.com/tech-summit.jpg",
+      endDate: "2024-07-17",
+      endTime: "17:00"
+    },
+    {
+      id: "f6a7b8c9-d0e1-2345-6789-0abcdef01234",
+      name: "Modern Art Exhibition",
+      date: "2024-08-20",
+      time: "10:00",
+      location: "The Grand Gallery, London",
+      isPublic: true,
+      createdAt: "2024-03-01T09:00:00Z",
+      categoryId: "b2c3d4e5-f6a7-8901-2345-67890abcdef0",
+      creatorId: "d4e5f6a7-b8c9-0123-4567-890abcdef012",
+      description: "A collection of contemporary artworks from around the globe.",
+      imageUrl: "https://example.com/art-exhibition.jpg",
+      endDate: "2024-10-20",
+      endTime: "18:00"
+    }
+  ])
+}

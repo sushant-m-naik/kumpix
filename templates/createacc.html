@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lokin </title>
+    
+    <link rel="stylesheet" href="{{  url_for('static', filename='style.css')}}">
+    <link rel="shortcut icon" href="{{  url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+    <!-- <script src=""></script> -->
+</head>
+<nav>
+<img src="{{  url_for('static', filename='favicon.ico')}}" id="navimg" alt="LOKIN">
+</nav>
+<body>
+    Create account on KUMPIX.....
+    <form action="/createacc" method="post">
+        <p>Enter your Name :</p>
+        <input type="text" name="nm" id="nm" placeholder="Enter your Name"><br>
+        <p>Enter your Email :</p>
+        <input type="email" name="em" id="em" placeholder="Enter your Email"><br>
+        <p>Enter your password :</p>
+        <input type="password" name="psw" id="psw" placeholder="Enter your password"><br>
+        <button type="submit"> Create Account</button>
+    </form>
+</body>
+</html>

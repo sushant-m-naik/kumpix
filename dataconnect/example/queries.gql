@@ -1,0 +1,64 @@
+query ListPublicEvents @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public as it only lists public events.") {
+  events(where: {isPublic: {eq: true}}, orderBy: [{date: ASC}, {time: ASC}]) {
+    id
+    name
+    date
+    time
+    location
+    description
+    imageUrl
+    category {
+      name
+    }
+  }
+}
+
+mutation CreateEvent($name: String!, $date: Date!, $time: String!, $location: String!, $isPublic: Boolean!, $description: String, $imageUrl: String, $endDate: Date, $endTime: String, $categoryId: UUID) @auth(level: USER, insecureReason: "This operation requires user authentication to create events.") {
+  event_insert(data: {
+    name: $name,
+    date: $date,
+    time: $time,
+    location: $location,
+    isPublic: $isPublic,
+    creatorId_expr: "auth.uid",
+    createdAt_expr: "request.time",
+    description: $description,
+    imageUrl: $imageUrl,
+    endDate: $endDate,
+    endTime: $endTime,
+    categoryId: $categoryId
+  }) {
+    id
+  }
+}
+
+query MyEvents @auth(level: USER) {
+  events(where: {creatorId: {eq_expr: "auth.uid"}}, orderBy: [{date: ASC}, {time: ASC}]) {
+    id
+    name
+    date
+    time
+    location
+    isPublic
+    category {
+      name
+    }
+  }
+}
+
+mutation UpdateMyEvent($id: UUID!, $name: String, $date: Date, $time: String, $location: String, $isPublic: Boolean, $description: String, $imageUrl: String, $endDate: Date, $endTime: String, $categoryId: UUID) @auth(expr: "auth.uid == query.event(id: $id).creator.id") {
+  event_update(key: {id: $id}, data: {
+    name: $name,
+    date: $date,
+    time: $time,
+    location: $location,
+    isPublic: $isPublic,
+    description: $description,
+    imageUrl: $imageUrl,
+    endDate: $endDate,
+    endTime: $endTime,
+    categoryId: $categoryId
+  }) {
+    id
+  }
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database</title>
+</head>
+
+<body>
+
+    <table>
+        <thead>
+
+            <th scope="col">SL. No.</th>
+            <th scope="col">NAME</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">PASSORD</th>
+        </thead>
+        <tbody>
+        {% for db in dtbs %}
+            <tr>
+
+                <td scope="row">{{loop.index}}</td>
+                <td>{{db.nmd}}</td>
+                <td>{{db.emd}}</td>
+                <td>{{db.pswd}}</td>
+            </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
