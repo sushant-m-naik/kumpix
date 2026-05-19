@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy 
 from usr import usr
 import pickle as p
-from firebase_functions import https_fn
+# from firebase_functions import https_fn
 
 app = Flask(__name__)
 
@@ -35,32 +35,35 @@ def hi():
         return render_template("login.html")
     
 
-@https_fn.on_request()
-def kumpix_backend(req: https_fn.Request) -> https_fn.Response:
-    with app.request_context(req.environ):
-        return app.full_dispatch_request()
+# @https_fn.on_request()
+# def kumpix_backend(req: https_fn.Request) -> https_fn.Response:
+#     with app.request_context(req.environ):
+#         return app.full_dispatch_request()
 
 
 
 @app.route("/profile")
 def hiop():
-    try:
+    # try:
         with open("usr/usr.db","rb") as db:
                data=p.load(db)
-               # print(data)
-               print("lop" in data)
+            #    # print(data)
+            #    print("lop" in data)
+
+            #    data= dbsq
+
                # print("Email" in data)
                # if data=={"Name":nm,"Email":em,"Password":psw}:
-               if ("Email" in data) and ('Password' in data):
+               if (("Email" in data) and ('Password' in data)) and ((data['Email'] != 'undefined') and (data['Name'] != 'undefined')):
                     # print("#")
                     dtbs= dbsq.query.all()
                     print(dtbs)
                     return render_template("profile.html", dtbs=dtbs)
                else:
-                    return render_template("profile.html")
+                    return render_template("login.html")
 
-    except:
-        return render_template("login.html")
+    # except EOFError:
+    #     return render_template("login.html")
                     # return "hi, hlo"
                     # return render_template("index.html")
 
@@ -73,7 +76,7 @@ def createacc():
         em = request.form['em']
         psw = request.form['psw']
         # print("your Email is:"+em+" "+nm+" "+ psw)
-        # usr.user().userr(nm,em,psw)
+        usr.user().userr(nm,em,psw)
         userd= dbsq(nmd=nm,emd=em,pswd=psw)
         dbs.session.add(userd)
         dbs.session.commit()
@@ -85,7 +88,7 @@ def createacc():
 def ko():
     with open("usr/usr.db",'rb') as df:
          dtbs= dbsq.query.all()
-         print(dtbs)
+    #      print(dtbs)
 
 
         #  data=p.load(df)
@@ -107,8 +110,12 @@ def loginn():
        
         # print("your Email is:"+em+" "+nm+" "+ psw)
         return usr.user().loginuserr(nm,em,psw)
+    
+    elif request.method=="GET":
+        return render_template("login.html")
+
     # return "hi, hlo"
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 if (__name__=="__main__"):

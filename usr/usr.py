@@ -34,9 +34,9 @@ class user():
         # email=em
         # password=psw
         print("from class"+nm+em+psw)
-        # with open("usr/usr.db","wb") as db:
-        #     p.dump({"Name":nm,"Email":em,"Password":psw},db)
-        #     return "Successful"
+        with open("usr/usr.db","wb") as db:
+            p.dump({"Name":nm,"Email":em,"Password":psw},db)
+            return "Successful"
         userd= dbsq(nmd=nm,emd=em,pswd=psw)
         dbs.session.add(userd)
         dbs.session.commit()

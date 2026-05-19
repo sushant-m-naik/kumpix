@@ -110,12 +110,13 @@ button{
 
 #jok{
     background: #00940865;
+    padding: 0 ;
     /* max-width: fit-content; */
 
     /* display: flex; */
     position: absolute;
     max-height: fit-content;
-    opacity: 80%;
+    /* opacity: 80%; */
 }
 
 
@@ -185,6 +186,9 @@ nav a button:hover{
     
 }
 
+p{
+    margin: 0;
+}
 
 #loginf{
     position: relative;

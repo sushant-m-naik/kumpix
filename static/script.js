@@ -13,7 +13,7 @@ async function jo() {
 
 }
 
-jo()
+// jo()
 
 
 function loading(){
@@ -27,27 +27,36 @@ function loading(){
 function proff() {
     console.log("i")
     const op = document.getElementById('profile');
+    
     op.addEventListener('mouseover', () => {
 
-        document.getElementById('jok').innerHTML = "hi kok"
+        document.getElementById('jok').innerHTML = "Welcome,"
         var d = document.createElement("p")
         var acc= localStorage
         d.innerHTML = `${acc.Name}
-                    <br>
+                    
                     ${acc.Email}
         `
         document.getElementById('jok').append(d)
         // alert("hi")
         var follower= document.getElementById('jok')
-        var k= follower.width
+        var k= follower.offsetWidth
+        k=parseInt(k)
         document.onmousemove= (e) => {
-
-            follower.style.left = (e.pageX-100 )+`px`;
+            
+            // document.getElementById('jok').style.display = 'block'
+            document.getElementById('jok').style.opacity = '1'
+            document.getElementById('jok').style.padding = '10px'
+            follower.style.left = (e.pageX-(k+10) )+`px`;
             follower.style.top = (e.pageY-7)+`px`;
         }
     })
     op.onmouseout = () => {
-        document.getElementById('jok').innerHTML = ""
+        document.getElementById('jok').style.opacity = '0'
+        document.getElementById('jok').style.padding = '0px'
+        document.getElementById('jok').innerHTML=''
+
+
     }
     // var follower=document.createElement("p")
     // document.append(follower)
@@ -64,11 +73,11 @@ function info(inf) {
 function prof(nm, em) {
     // confirm("Your name is: "+nm)
     // confirm("Your email is: "+em)
-    document.location="/profile"
     var lst = localStorage
     lst.clear()
     lst.setItem("Name", nm)
     lst.setItem("Email", em)
     
+    // document.location="/"
 
 }
