@@ -1,7 +1,10 @@
 import pickle as p
 from flask import Flask, render_template
-from app import dbsq
+from flask import Blueprint
 from flask_sqlalchemy import SQLAlchemy 
+from extension import dbsq  # <-- Reach into the storage box safely!
+
+usr = Blueprint('usr', __name__)
 
 app = Flask(__name__)
 
