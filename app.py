@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy 
-from usr import usr
 import pickle as p
 # from firebase_functions import https_fn
 
@@ -10,6 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///usr.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 dbs = SQLAlchemy(app)
 
+from usr import usr
 
 class dbsq(dbs.Model):
     nmd=dbs.Column(dbs.String(200),nullable=False)
