@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///usr.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 dbs = SQLAlchemy(app)
-
+dbs.init_app(app)
 from usr import usr
 
 class dbsq(dbs.Model):
