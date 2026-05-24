@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy 
 import pickle as p
-from extension import dbsq
+from extension import dbsq            
 # from firebase_functions import https_fn
 
 app = Flask(__name__)
@@ -61,7 +61,7 @@ def hiop():
                     print(dtbs)
                     return render_template("profile.html", dtbs=dtbs)
                else:
-                    return render_template("login.html")
+                    return redirect("/login")
 
     # except EOFError:
     #     return render_template("login.html")
@@ -83,7 +83,7 @@ def createacc():
         dbs.session.commit()
 
     
-    return render_template("createacc.html")
+    return render_template("profile.html")
 
 @app.route("/db")
 def ko():

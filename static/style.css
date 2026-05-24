@@ -195,3 +195,21 @@ p{
     align-items: center;
     text-align: center;
 }
+
+
+
+.svg-icon {
+  width: 2.5em;
+  height: 2.5em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #25cc8c;
+}
+
+.svg-icon circle {
+  stroke: #0a9471;
+  stroke-width: 1;
+}

@@ -30,8 +30,9 @@ function proff() {
     
     op.addEventListener('mouseover', () => {
 
-        document.getElementById('jok').innerHTML = "Welcome,"
+        document.getElementById('jok').innerHTML = ""
         var d = document.createElement("p")
+        d.id="joki"
         var acc= localStorage
         d.innerHTML = `${acc.Name}
                     
@@ -45,16 +46,16 @@ function proff() {
         document.onmousemove= (e) => {
             
             // document.getElementById('jok').style.display = 'block'
-            document.getElementById('jok').style.opacity = '1'
-            document.getElementById('jok').style.padding = '10px'
+            document.getElementById('joki').style.opacity = '1'
+            document.getElementById('joki').style.padding = '10px'
             follower.style.left = (e.pageX-(k+10) )+`px`;
             follower.style.top = (e.pageY-7)+`px`;
         }
     })
     op.onmouseout = () => {
-        document.getElementById('jok').style.opacity = '0'
-        document.getElementById('jok').style.padding = '0px'
-        document.getElementById('jok').innerHTML=''
+        document.getElementById('joki').style.opacity = '0'
+        document.getElementById('joki').style.padding = '0px'
+        document.getElementById('joki').remove()
 
 
     }
