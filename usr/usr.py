@@ -22,6 +22,8 @@ class user():
         print("from class"+nm+em+psw)
         with open("usr/usr.db","rb") as db:
             data=p.load(db)
+
+            gre= usr
             # print(data)
             # print("lop" in data)
             # print("Email" in data)

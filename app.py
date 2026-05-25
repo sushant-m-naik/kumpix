@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy 
 import pickle as p
-from extension import dbsq            
+from extension import dbsq  
+# from db import database       
 # from firebase_functions import https_fn
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///usr.db"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 dbs = SQLAlchemy()
 dbs.init_app(app)
@@ -21,11 +23,21 @@ class dbsq(dbs.Model):
         return f"{self.nmd} - {self.emd}"
     
 
+class database(dbs.Model):
+    nmd=dbs.Column(dbs.String(200),nullable=False)
+    emd=dbs.Column(dbs.String(200),nullable=False, primary_key=True)
+    pswd=dbs.Column(dbs.String(200),nullable=False)
+
+    def __repr__(self) -> str:
+        return f"{self.nmd} - {self.emd}"
+    
+
 @app.route("/")
 def hi():
     try:
-        with open("usr/usr.db","rb") as db:
-               data=p.load(db)
+        with open("usr/usr.db","rb") as dbl:
+               data=p.load(dbl)
+
                # print(data)
                # print("lop" in data)
                # print("Email" in data)
@@ -42,12 +54,31 @@ def hi():
 #         return app.full_dispatch_request()
 
 
+@app.route("/delete/<string:em>")
+def delu(em):
+    
+    tab = dbsq.query.filter_by(emd=em).first()
+    dbs.session.delete(tab)
+    dbs.session.commit()
+    
+    return redirect("/profile")
+
+
+@app.route("/del")
+def delup():
+    
+    tab = dbsq.query.filter_by(emd="").first()
+    dbs.session.delete(tab)
+    dbs.session.commit()
+    
+    return redirect("/profile")
+
 
 @app.route("/profile")
 def hiop():
     # try:
-        with open("usr/usr.db","rb") as db:
-               data=p.load(db)
+        with open("usr/usr.db","rb") as dbl:
+               data=p.load(dbl)
             #    # print(data)
             #    print("lop" in data)
 
@@ -55,13 +86,13 @@ def hiop():
 
                # print("Email" in data)
                # if data=={"Name":nm,"Email":em,"Password":psw}:
-               if (("Email" in data) and ('Password' in data)) and ((data['Email'] != 'undefined') and (data['Name'] != 'undefined')):
+               if (("Email" not in data) and ('Password' not in data)) or ((data['Email'] == 'undefined') and (data['Name'] == 'undefined')):
+                    return redirect("/login")
+               else:
                     # print("#")
                     dtbs= dbsq.query.all()
                     print(dtbs)
                     return render_template("profile.html", dtbs=dtbs)
-               else:
-                    return redirect("/login")
 
     # except EOFError:
     #     return render_template("login.html")
@@ -78,12 +109,15 @@ def createacc():
         psw = request.form['psw']
         # print("your Email is:"+em+" "+nm+" "+ psw)
         usr.user().userr(nm,em,psw)
+        
         userd= dbsq(nmd=nm,emd=em,pswd=psw)
+        crtusr=database(nmd=nm,emd=em,pswd=psw)
         dbs.session.add(userd)
+        dbs.session.add(crtusr)
         dbs.session.commit()
 
     
-    return render_template("profile.html")
+    return render_template("createacc.html")
 
 @app.route("/db")
 def ko():
@@ -108,7 +142,7 @@ def loginn():
         em = request.form['em']
         psw = request.form['psw']
 
-       
+        # database = "/instance/kumpix.db/"
         # print("your Email is:"+em+" "+nm+" "+ psw)
         return usr.user().loginuserr(nm,em,psw)
     
